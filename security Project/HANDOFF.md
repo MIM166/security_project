@@ -160,3 +160,129 @@ kernel ignores the same packet.
 - Owner preference: **ask before modifying any project files.**
 - Open next step (not yet done): create the edited two-machine COPY of the project
   (`lab_common.py` IP + `require_namespace` bypass) once the second machine is chosen.
+
+---
+
+## 7. দুই-মেশিন লাইভ ডেমো — কার কী করতে হবে (বিস্তারিত, বাংলা)
+
+এই সেশনে দুই-মেশিন ডেমোর জন্য graded lab-এর একটা আলাদা COPY বানানো হয়েছে:
+**`security Project/twomachine/`** (মূল graded lab অক্ষত)। এতে শুধু ৩টা পরিবর্তন:
+- `lab_common.py` — CLIENT/SERVER/ATTACKER/ports এখন **environment variable** থেকে আসে;
+  `require_namespace()` শুধু root চেক করে (namespace/route চেক বাদ)।
+- `icmp_builder.py` — `LAB_NET` (allowed subnet) env `LAB_NET` থেকে আসে।
+- নতুন runner: `net_demo.sh` (server / client / attacker রোল)। বাকি ৩টা .py হুবহু কপি।
+
+### ভূমিকা বণ্টন
+- **তুমি → Ubuntu ল্যাপটপ = Machine B = attacker** (একটাই forged ICMP পাঠায়)।
+- **বন্ধু → Windows-এর WSL = Machine A = server + client** (দুটোই এক মেশিনে, তাই
+  CLIENT আর SERVER একই IP, শুধু port আলাদা: client 40000, server 5001)।
+- একমাত্র cross-machine ট্রাফিক = ওই একটা ICMP প্যাকেট (B → A)।
+
+### হার্ড রুল
+1. শুধু **নিজেদের প্রাইভেট LAN** (ফোন হটস্পট / নিজের রাউটার)। কখনো ভার্সিটি/পাবলিক wifi নয়
+   (নিয়মেও নিষেধ, আর সেখানে client isolation-এ attack পৌঁছায় না)।
+2. যে মেশিনে **client** চলবে সেটা Linux, root, এবং সত্যিকারে LAN-এ থাকতে হবে।
+3. ডিফল্ট WSL2 (NAT) LAN-এ থাকে না → WSL-এ **mirrored networking** লাগবে (Win11 22H2+)।
+
+---
+
+### পর্ব ০: প্রস্তুতি (একবার)
+
+**দুজন মিলে:** একটা ফোন হটস্পট অন করে দুই ল্যাপটপ সেখানে কানেক্ট করো।
+(এই সেশনে iPhone হটস্পট ব্যবহার হয়েছিল → subnet `172.20.10.0/28`,
+তখন Ubuntu/attacker পেয়েছিল `B_IP = 172.20.10.12`।)
+
+**বন্ধু (Windows + WSL) — সবচেয়ে জরুরি ধাপ:**
+1. `%UserProfile%\.wslconfig`-এ যোগ করো:
+   ```
+   [wsl2]
+   networkingMode=mirrored
+   ```
+   তারপর PowerShell-এ `wsl --shutdown` → WSL আবার খোলো।
+2. Windows firewall-এ inbound ICMP allow করো (Administrator PowerShell):
+   ```powershell
+   New-NetFirewallRule -DisplayName "LAB ICMPv4-In" -Protocol ICMPv4 -IcmpType Any -Direction Inbound -Action Allow -Profile Any
+   ```
+   (ডেমো শেষে: `Remove-NetFirewallRule -DisplayName "LAB ICMPv4-In"`)
+3. `twomachine/` ফোল্ডার WSL-এ কপি করো (git/scp/USB)। দুই মেশিনে একই কোড।
+
+**দুজনেই IP বের করো:**
+```bash
+ip -4 addr show scope global
+```
+`inet 172.20.10.X/28 ... wlp1s0f0` লাইন থেকে → বন্ধুর `X` = **A_IP**, তোমার = **B_IP**।
+(বন্ধুর WSL-এ যদি `172.20.10.x` না দেখায় বরং `192.168.x` দেখায় → mirrored অন হয়নি।)
+
+**দুই মেশিনেই env সেট করো (হুবহু একই মান):**
+```bash
+cd ".../security Project/twomachine"
+export LAB_CLIENT=172.20.10.A     # বন্ধুর WSL IP
+export LAB_SERVER=172.20.10.A     # একই
+export LAB_ATTACKER=172.20.10.12  # তোমার Ubuntu IP
+export LAB_NET=172.20.10.0/28
+```
+> LAB_CLIENT ও LAB_SERVER দুই মেশিনে অবশ্যই একদম এক — নাহলে client প্যাকেট reject করবে।
+
+**কানেক্টিভিটি টেস্ট (তোমার Ubuntu-র সাধারণ টার্মিনালে, আসল সংখ্যা বসিয়ে):**
+```bash
+ping 172.20.10.A      # A_IP = বন্ধুর WSL IP; "A_IP" আক্ষরিক লিখবে না
+```
+reply এলে ✅ এগোও; timeout/loss হলে ❌ আগে LAN/mirrored/firewall ঠিক করো।
+
+---
+
+### পর্ব ১: চার অ্যাক্ট (সব কমান্ড `sudo -E` দিয়ে — root + env রাখতে)
+
+লাগবে ৩ টার্মিনাল: বন্ধুর WSL-এ ২টা (T1 server, T2 client), তোমার Ubuntu-তে ১টা (T3 attacker)।
+
+**ACT 1 — Baseline (attack নেই):** attack না থাকলে ট্রান্সফার সম্পূর্ণ হয়।
+```
+বন্ধু T1:  sudo -E bash net_demo.sh server act1
+বন্ধু T2:  sudo -E bash net_demo.sh client legacy act1
+তুমি:      কিছু না
+```
+ফল ✅: client complete, server COMPLETE।
+
+**ACT 2 — RESET বনাম legacy (এক প্যাকেটে খুন):**
+```
+বন্ধু T1:  sudo -E bash net_demo.sh server act2
+বন্ধু T2:  sudo -E bash net_demo.sh client legacy act2
+তুমি T3:   sudo -E bash net_demo.sh attacker reset act2   # client শুরুর ৩-৫ সেকেন্ড পর
+```
+ফল ✅: client action=abort, server INCOMPLETE।
+
+**ACT 3 — QUENCH বনাম legacy (গলা টিপে ধীর):**
+```
+বন্ধু T1:  sudo -E bash net_demo.sh server act3
+বন্ধু T2:  sudo -E bash net_demo.sh client legacy act3
+তুমি T3:   sudo -E bash net_demo.sh attacker quench act3   # ৩-৫ সেকেন্ড পর
+```
+ফল ✅: client action=slow, COMPLETE কিন্তু ধীর।
+
+**ACT 4 — একই RESET বনাম hardened (প্রতিরক্ষা, সবচেয়ে গুরুত্বপূর্ণ):**
+```
+বন্ধু T1:  sudo -E bash net_demo.sh server act4
+বন্ধু T2:  sudo -E bash net_demo.sh client hardened act4   # এবার hardened
+তুমি T3:   sudo -E bash net_demo.sh attacker reset act4    # ACT2-এর হুবহু একই প্যাকেট
+```
+ফল ✅: client action=advisory, server COMPLETE। একই আক্রমণ, তবু hardened বেঁচে যায়।
+
+**উপস্থাপনার মূল কথা:** ACT 2 বনাম ACT 4 পাশাপাশি দেখাও — একই প্যাকেট, শুধু policy আলাদা।
+
+লগ জমা থাকবে `twomachine/out/`-এ (`actX_server.jsonl`, `actX_client.jsonl`, `actX_attacker.jsonl`)।
+
+---
+
+### Troubleshooting
+- client কোনো reaction দেখায় না → প্যাকেট A-তে পৌঁছাচ্ছে না। চেক: `ping A_IP`, WSL mirrored,
+  Windows firewall rule, আর LAB_CLIENT/LAB_SERVER দুই মেশিনে এক কিনা।
+- "Address must be a host in ... lab" → LAB_NET তোমাদের IP ধরছে না; ঠিক করো।
+- attack টাইমিং: 4 MiB @ 512 KiB/s ট্রান্সফার ~৮ সেকেন্ড চলে; এর মধ্যেই attacker ফায়ার করতে হবে
+  (দরকারে env `PAYLOAD` বাড়িয়ে উইন্ডো লম্বা করো)।
+- **WSL বারবার ঝামেলা করলে সবচেয়ে সহজ বিকল্প — role swap:** তোমার native Ubuntu = client+server
+  (Machine A), বন্ধু = attacker। কারণ receive-এর চেয়ে *send* অনেক সহজ। তখন env-এ
+  LAB_CLIENT/LAB_SERVER = তোমার Ubuntu IP, LAB_ATTACKER = বন্ধুর IP।
+
+### ডেমো শেষে (cleanup)
+- বন্ধুর Windows: `Remove-NetFirewallRule -DisplayName "LAB ICMPv4-In"`
+- `twomachine/out/`-এর লগগুলো evidence হিসেবে রাখতে পারো।
