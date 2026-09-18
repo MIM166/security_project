@@ -22,7 +22,10 @@ def ip(*args):
 
 
 def ns_names():
-    return {row["name"] for row in json.loads(ip("-j", "netns", "list").stdout)}
+    # `ip -j netns list` emits an empty string (not "[]") when no namespaces
+    # exist on some iproute2 builds (e.g. 6.1.0 on Ubuntu 24.04), so guard it.
+    output = ip("-j", "netns", "list").stdout.strip()
+    return {row["name"] for row in json.loads(output)} if output else set()
 
 
 def check_owner():
@@ -100,7 +103,14 @@ def status(validate=False):
         routes6 = json.loads(ip("-n", ns, "-j", "-6", "route").stdout)
         addresses = json.loads(ip("-n", ns, "-j", "addr").stdout)
         if validate:
-            if {link["ifname"] for link in links} != expected_interfaces[ns]:
+            # Some host kernels (e.g. Docker Desktop's LinuxKit) load the tunnel
+            # modules, so every fresh namespace is auto-populated with down,
+            # address-less fallback devices. They provide no host connectivity
+            # (routes/addresses are validated separately below), so ignore them.
+            FALLBACK = {"tunl0", "gre0", "gretap0", "erspan0", "ip_vti0",
+                        "ip6_vti0", "sit0", "ip6tnl0", "ip6gre0"}
+            present_ifaces = {link["ifname"] for link in links} - FALLBACK
+            if present_ifaces != expected_interfaces[ns]:
                 raise RuntimeError(f"Unexpected interfaces in {ns}")
             if any(r.get("gateway") or r.get("dst") != "10.10.10.0/24" for r in routes):
                 raise RuntimeError(f"Unexpected IPv4 route in {ns}")
