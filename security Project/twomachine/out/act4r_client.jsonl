@@ -1,0 +1,19 @@
+{"configured_quote_sequence": 305419896, "destination": "172.20.10.7", "destination_port": 5001, "event": "transfer_start", "low_rate_bytes": 131072, "mode": "hardened", "monotonic": 2001.471416979, "normal_rate_bytes": 524288, "payload_bytes": 4194304, "sequence_validation": "unavailable_for_kernel_socket", "source": "172.20.10.7", "source_port": 40000, "unix_time": 1789794323.3595054}
+{"bytes_sent": 278528, "elapsed": 0.5153153740000107, "event": "sample", "monotonic": 2001.986893162, "pacing": "normal", "unix_time": 1789794323.874982}
+{"action": "advisory", "bytes_sent": 278528, "event": "icmp_decision", "mode": "hardened", "monotonic": 2001.991342824, "packet": {"destination": "172.20.10.7", "destination_port": 5001, "icmp_checksum_valid": true, "icmp_code": 2, "icmp_type": 3, "ipv4_checksum_valid": true, "length": 56, "quoted_destination": "172.20.10.7", "quoted_ipv4_checksum_valid": true, "quoted_source": "172.20.10.7", "sequence": 305419896, "source": "172.20.10.12", "source_port": 40000}, "packet_sha256": "7571247e62755675a6d19bac91a7313bcf87dc2224af965b91b502f7888a1c72", "reason": "hard error is nonfatal for established transfer", "sequence_validation": "unavailable_for_kernel_socket", "unix_time": 1789794323.8794312}
+{"bytes_sent": 540672, "elapsed": 1.0304199170000174, "event": "sample", "monotonic": 2002.502181879, "pacing": "normal", "unix_time": 1789794324.390271}
+{"bytes_sent": 802816, "elapsed": 1.5449566859999777, "event": "sample", "monotonic": 2003.016506432, "pacing": "normal", "unix_time": 1789794324.9045951}
+{"bytes_sent": 1064960, "elapsed": 2.0582101330001024, "event": "sample", "monotonic": 2003.529887812, "pacing": "normal", "unix_time": 1789794324.6128426}
+{"bytes_sent": 1327104, "elapsed": 2.572475749999967, "event": "sample", "monotonic": 2004.044116288, "pacing": "normal", "unix_time": 1789794325.1270704}
+{"bytes_sent": 1589248, "elapsed": 3.087921902000062, "event": "sample", "monotonic": 2004.559629489, "pacing": "normal", "unix_time": 1789794325.6425838}
+{"bytes_sent": 1851392, "elapsed": 3.602520725999966, "event": "sample", "monotonic": 2005.074327165, "pacing": "normal", "unix_time": 1789794326.1572814}
+{"bytes_sent": 2113536, "elapsed": 4.11973369500015, "event": "sample", "monotonic": 2005.591494988, "pacing": "normal", "unix_time": 1789794326.6744492}
+{"bytes_sent": 2375680, "elapsed": 4.636557584999991, "event": "sample", "monotonic": 2006.108311422, "pacing": "normal", "unix_time": 1789794327.1912658}
+{"bytes_sent": 2637824, "elapsed": 5.149733877000017, "event": "sample", "monotonic": 2006.621342744, "pacing": "normal", "unix_time": 1789794327.7042966}
+{"bytes_sent": 2899968, "elapsed": 5.663877272000036, "event": "sample", "monotonic": 2007.135600719, "pacing": "normal", "unix_time": 1789794328.218555}
+{"bytes_sent": 3162112, "elapsed": 6.181577492000088, "event": "sample", "monotonic": 2007.653269512, "pacing": "normal", "unix_time": 1789794328.7362237}
+{"bytes_sent": 3424256, "elapsed": 6.6972218050000265, "event": "sample", "monotonic": 2008.168913261, "pacing": "normal", "unix_time": 1789794329.251867}
+{"bytes_sent": 3686400, "elapsed": 7.213114892000021, "event": "sample", "monotonic": 2008.684915395, "pacing": "normal", "unix_time": 1789794329.7678704}
+{"bytes_sent": 3948544, "elapsed": 7.7295623150000665, "event": "sample", "monotonic": 2009.201287293, "pacing": "normal", "unix_time": 1789794330.2842417}
+{"aborted": false, "bytes_sent": 4194304, "event": "write_closed", "monotonic": 2009.685132403, "unix_time": 1789794330.7680864}
+{"aborted": false, "bytes_sent": 4194304, "complete": true, "elapsed": 8.2148444070001, "error": null, "event": "transfer_end", "low_rate_entered": false, "monotonic": 2009.686258626, "receiver_receipt": {"bytes_received": 4194304, "complete": true, "payload_valid": true, "sha256": "2b07811057df887086f06a67edc6ebf911de8b6741156e7a2eb1416a4b8b1b2e"}, "unix_time": 1789794330.7692125}

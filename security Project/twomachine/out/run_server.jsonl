@@ -1,0 +1,18 @@
+{"address": "172.20.10.7", "event": "listening", "monotonic": 1169.195250941, "port": 5001, "unix_time": 1789793511.5199978}
+{"event": "transfer_start", "expected_bytes": 4194304, "monotonic": 1172.291456661, "peer": ["10.255.255.254", 40000], "unix_time": 1789793514.616203}
+{"bytes_received": 278528, "elapsed": 0.5163152489999447, "event": "sample", "monotonic": 1172.807777714, "unix_time": 1789793515.1325243}
+{"bytes_received": 540672, "elapsed": 1.0361602709999715, "event": "sample", "monotonic": 1173.327623352, "unix_time": 1789793515.65237}
+{"bytes_received": 802816, "elapsed": 1.5552337479998641, "event": "sample", "monotonic": 1173.846694854, "unix_time": 1789793516.1714413}
+{"bytes_received": 1064960, "elapsed": 2.072819191999997, "event": "sample", "monotonic": 1174.364279767, "unix_time": 1789793516.689026}
+{"bytes_received": 1327104, "elapsed": 2.5913413250000303, "event": "sample", "monotonic": 1174.882804619, "unix_time": 1789793517.2075515}
+{"bytes_received": 1589248, "elapsed": 3.1116771969998354, "event": "sample", "monotonic": 1175.403138349, "unix_time": 1789793517.7278848}
+{"bytes_received": 1851392, "elapsed": 3.632225255999856, "event": "sample", "monotonic": 1175.923686832, "unix_time": 1789793518.2484336}
+{"bytes_received": 2113536, "elapsed": 4.149549925999963, "event": "sample", "monotonic": 1176.441013495, "unix_time": 1789793518.7657607}
+{"bytes_received": 2375680, "elapsed": 4.669552776000046, "event": "sample", "monotonic": 1176.961013075, "unix_time": 1789793519.2857594}
+{"bytes_received": 2637824, "elapsed": 5.187428887999886, "event": "sample", "monotonic": 1177.478888816, "unix_time": 1789793519.803635}
+{"bytes_received": 2899968, "elapsed": 5.703359060999901, "event": "sample", "monotonic": 1177.994818892, "unix_time": 1789793520.319565}
+{"bytes_received": 3162112, "elapsed": 6.219646324999985, "event": "sample", "monotonic": 1178.511112746, "unix_time": 1789793520.8358598}
+{"bytes_received": 3424256, "elapsed": 6.73781532299995, "event": "sample", "monotonic": 1179.029275926, "unix_time": 1789793521.354022}
+{"bytes_received": 3686400, "elapsed": 7.253494947000036, "event": "sample", "monotonic": 1179.544956409, "unix_time": 1789793521.869703}
+{"bytes_received": 3948544, "elapsed": 7.77043972499996, "event": "sample", "monotonic": 1180.061896977, "unix_time": 1789793522.3866427}
+{"bytes_received": 4194304, "complete": true, "elapsed": 8.252706536999995, "event": "transfer_end", "expected_bytes": 4194304, "goodput_mbps": 4.065870008773828, "monotonic": 1180.544175255, "payload_valid": true, "premature_close": false, "reason": "eof", "sha256": "2b07811057df887086f06a67edc6ebf911de8b6741156e7a2eb1416a4b8b1b2e", "unix_time": 1789793522.8689208}

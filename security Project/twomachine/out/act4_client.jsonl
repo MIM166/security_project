@@ -1,0 +1,19 @@
+{"configured_quote_sequence": 305419896, "destination": "172.20.10.7", "destination_port": 5001, "event": "transfer_start", "low_rate_bytes": 131072, "mode": "hardened", "monotonic": 712.887634751, "normal_rate_bytes": 524288, "payload_bytes": 4194304, "sequence_validation": "unavailable_for_kernel_socket", "source": "172.20.10.7", "source_port": 40000, "unix_time": 1789793066.7494535}
+{"action": "ignore", "bytes_sent": 229376, "event": "icmp_decision", "mode": "hardened", "monotonic": 713.340936892, "packet": {"destination": "172.20.10.7", "destination_port": 5001, "icmp_checksum_valid": true, "icmp_code": 0, "icmp_type": 4, "ipv4_checksum_valid": true, "length": 56, "quoted_destination": "172.20.10.7", "quoted_ipv4_checksum_valid": true, "quoted_source": "172.20.10.7", "sequence": 305419896, "source": "172.20.10.12", "source_port": 40000}, "packet_sha256": "406c8acbdcb87f746cd33a4b6c92c756f089292b95dcd784e5b6db12b63d4d26", "reason": "RFC 6633: Source Quench discarded for transport control", "sequence_validation": "unavailable_for_kernel_socket", "unix_time": 1789793067.2027497}
+{"bytes_sent": 278528, "elapsed": 0.5191934519999677, "event": "sample", "monotonic": 713.407111715, "pacing": "normal", "unix_time": 1789793067.2689238}
+{"bytes_sent": 540672, "elapsed": 1.0386996329999647, "event": "sample", "monotonic": 713.926527312, "pacing": "normal", "unix_time": 1789793067.7883391}
+{"bytes_sent": 802816, "elapsed": 1.5565823560000354, "event": "sample", "monotonic": 714.444568084, "pacing": "normal", "unix_time": 1789793068.3063803}
+{"bytes_sent": 1064960, "elapsed": 2.0746196710000504, "event": "sample", "monotonic": 714.962557653, "pacing": "normal", "unix_time": 1789793068.8243697}
+{"bytes_sent": 1327104, "elapsed": 2.5947130770000513, "event": "sample", "monotonic": 715.48266158, "pacing": "normal", "unix_time": 1789793069.3444738}
+{"bytes_sent": 1589248, "elapsed": 3.111107408999942, "event": "sample", "monotonic": 715.998929705, "pacing": "normal", "unix_time": 1789793069.8607411}
+{"bytes_sent": 1851392, "elapsed": 3.626615278000031, "event": "sample", "monotonic": 716.514522368, "pacing": "normal", "unix_time": 1789793070.3763342}
+{"bytes_sent": 2113536, "elapsed": 4.147609897000052, "event": "sample", "monotonic": 717.035480151, "pacing": "normal", "unix_time": 1789793070.8972921}
+{"bytes_sent": 2375680, "elapsed": 4.664862882999955, "event": "sample", "monotonic": 717.552820902, "pacing": "normal", "unix_time": 1789793071.414633}
+{"bytes_sent": 2637824, "elapsed": 5.181491321999943, "event": "sample", "monotonic": 718.06941675, "pacing": "normal", "unix_time": 1789793071.9312286}
+{"bytes_sent": 2899968, "elapsed": 5.698150440999939, "event": "sample", "monotonic": 718.58590453, "pacing": "normal", "unix_time": 1789793072.4477162}
+{"bytes_sent": 3162112, "elapsed": 6.214852405999977, "event": "sample", "monotonic": 719.102677225, "pacing": "normal", "unix_time": 1789793072.964489}
+{"bytes_sent": 3424256, "elapsed": 6.731547463999959, "event": "sample", "monotonic": 719.619298541, "pacing": "normal", "unix_time": 1789793073.4811108}
+{"bytes_sent": 3686400, "elapsed": 7.248476837999988, "event": "sample", "monotonic": 720.136315953, "pacing": "normal", "unix_time": 1789793073.998128}
+{"bytes_sent": 3948544, "elapsed": 7.7665245319999485, "event": "sample", "monotonic": 720.654489337, "pacing": "normal", "unix_time": 1789793074.5163016}
+{"aborted": false, "bytes_sent": 4194304, "event": "write_closed", "monotonic": 721.141345469, "unix_time": 1789793075.0031576}
+{"aborted": false, "bytes_sent": 4194304, "complete": true, "elapsed": 8.25475854199999, "error": null, "event": "transfer_end", "low_rate_entered": false, "monotonic": 721.142389393, "receiver_receipt": {"bytes_received": 4194304, "complete": true, "payload_valid": true, "sha256": "2b07811057df887086f06a67edc6ebf911de8b6741156e7a2eb1416a4b8b1b2e"}, "unix_time": 1789793075.0042005}

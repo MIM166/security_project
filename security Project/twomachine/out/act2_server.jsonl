@@ -1,0 +1,3 @@
+{"address": "172.20.10.7", "event": "listening", "monotonic": 1893.136638738, "port": 5001, "unix_time": 1789794217.4421487}
+{"event": "transfer_start", "expected_bytes": 4194304, "monotonic": 1905.017794269, "peer": ["10.255.255.254", 40000], "unix_time": 1789794229.3233037}
+{"bytes_received": 147456, "complete": false, "elapsed": 0.2922409499999503, "event": "transfer_end", "expected_bytes": 4194304, "goodput_mbps": 4.036559558132426, "monotonic": 1905.310051637, "payload_valid": true, "premature_close": true, "reason": "eof", "sha256": "ad578d1564c89c10c6a85981f27af8b8d0fa687fd4854bccd98c311a90f99e6c", "unix_time": 1789794229.6155608}
