@@ -21,6 +21,7 @@ RATE="${RATE:-524288}"          # 512 KiB/s -> clean run ~8 s (time to switch te
 LOW="${LOW:-131072}"            # 128 KiB/s -> slowed rate after a quench
 
 ROLE="${1:-}"; ARG="${2:-}"; LABEL="${3:-run}"
+if [ "$ROLE" = "server" ] && [ -n "$ARG" ]; then LABEL="$ARG"; fi
 echo "config: client=$LAB_CLIENT server=$LAB_SERVER attacker=$LAB_ATTACKER net=$LAB_NET"
 
 case "$ROLE" in
